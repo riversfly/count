@@ -17,7 +17,7 @@ export const getUserBills = async (userId: number, query?: QueryBillsRequest) =>
             params: {
                 userId,
                 type: query?.type,
-                useFor: query?.use_for,
+                useFor: query?.useFor,
                 begin: query?.startDate,
                 end: query?.endDate
             }
@@ -120,7 +120,7 @@ export const createBill = async (userId: number, billData: CreateBillRequest) =>
             money: billData.money,
             date: billData.date,
             note: billData.note,
-            useFor: billData.use_for
+            useFor: billData.useFor
         };
 
         const response = await api.post(`/bills`, requestData);

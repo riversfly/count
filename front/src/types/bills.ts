@@ -6,7 +6,7 @@ export interface Bill {
     money: number;
     date: string; // ISO格式的日期字符串
     note?: string; // 备注/用途说明
-    use_for?: string; // 用途分类
+    useFor?: string; // 用途分类
 }
 
 // 创建账单请求类型定义
@@ -15,7 +15,7 @@ export interface CreateBillRequest {
     money: number;
     date: string;
     note?: string;
-    use_for?: string;
+    useFor?: string;
 }
 
 // 查询账单请求类型定义
@@ -23,7 +23,7 @@ export interface QueryBillsRequest {
     startDate?: string;
     endDate?: string;
     type?: 'pay' | 'income';
-    use_for?: string;
+    useFor?: string;
 }
 
 // 账单统计类型定义

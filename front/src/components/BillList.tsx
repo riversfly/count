@@ -3,6 +3,7 @@ import { Bill, QueryBillsRequest } from '../types/bills';
 import { getUserBills } from '../services/billApi';
 import { User } from '../types/users';
 import './BillList.css';
+import { log } from 'echarts/types/src/util/log.js';
 
 interface BillListProps {
     user: User;
@@ -55,7 +56,7 @@ const BillList: React.FC<BillListProps> = ({ user, onBillsLoaded, refreshTrigger
                 }
 
                 if (filterCategory !== 'all') {
-                    queryParams.use_for = filterCategory;
+                    queryParams.useFor = filterCategory;
                 }
 
                 const response = await getUserBills(user.id, queryParams);
@@ -68,6 +69,7 @@ const BillList: React.FC<BillListProps> = ({ user, onBillsLoaded, refreshTrigger
                     if (onBillsLoaded) {
                         onBillsLoaded(sortedBills);
                     }
+
                 } else {
                     setError(response.message || '获取账单失败');
                 }
@@ -182,7 +184,7 @@ const BillList: React.FC<BillListProps> = ({ user, onBillsLoaded, refreshTrigger
                     <div key={bill.id} className={`bill-item ${bill.type === 'income' ? 'income' : 'expense'}`}>
                         <div className="bill-date">{formatDate(bill.date)}</div>
                         <div className="bill-info">
-                            <div className="bill-category">{bill.use_for || (bill.type === 'income' ? '收入' : '支出')}</div>
+                            <div className="bill-category">{bill.useFor || (bill.type === 'income' ? '收入' : '支出')}</div>
                             <div className="bill-note">{bill.note || '-'}</div>
                         </div>
                         <div className="bill-amount">{formatMoney(bill.money, bill.type)}</div>
