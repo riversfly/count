@@ -3,6 +3,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Home from './components/Home';
 import Accounting from './pages/Accounting';
+import Analysis from './pages/Analysis';
 import './App.css'
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/accounting" element={<Accounting />} />
+        <Route path="/analysis" element={<Analysis />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>

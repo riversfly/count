@@ -1,0 +1,62 @@
+.analysis-container {
+    padding: 20px;
+    padding-bottom: 60px;
+}
+
+.analysis-header {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.analysis-header h1 {
+    font-size: 24px;
+    color: #333;
+    margin: 0;
+}
+
+.analysis-content {
+    padding: 20px;
+    margin-bottom: 60px;
+}
+
+.chart-container {
+    width: 100%;
+    height: 300px;
+    margin: 20px 0;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.analysis-content > div[ref="chartRef"] {
+    width: 100% !important;
+    height: 400px !important;
+    margin-top: 20px;
+}
+
+.date-selector {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.date-selector select {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.date-selector select:focus {
+    outline: none;
+    border-color: #4a90e2;
+}
+
+.loading {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}
