@@ -40,7 +40,7 @@ const Home: React.FC = () => {
     return (
         <div className="home-container">
             <div className="home-header">
-                <h1>记账本 - {user.username}</h1>
+                <h1>AI智能记账簿 - {user.username}</h1>
                 <button className="logout-button" onClick={handleLogout}>退出登录</button>
             </div>
 

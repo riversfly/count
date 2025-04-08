@@ -25,6 +25,13 @@ const BottomNav: React.FC = () => {
                 <span className="nav-text">记账</span>
             </div>
             <div
+                className={`nav-item ${isActive('/ai-accounting') ? 'active' : ''}`}
+                onClick={() => navigate('/ai-accounting')}
+            >
+                <span className="nav-icon">🤖</span>
+                <span className="nav-text">AI记账</span>
+            </div>
+            <div
                 className={`nav-item ${isActive('/analysis') ? 'active' : ''}`}
                 onClick={() => navigate('/analysis')}
             >

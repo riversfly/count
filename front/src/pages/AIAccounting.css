@@ -1,0 +1,81 @@
+.ai-accounting-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.response-container {
+  margin: 20px 0;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+  font-size: 16px;
+  line-height: 1.6;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.ai-accounting-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.ai-accounting-header h1 {
+    font-size: 24px;
+    color: #333;
+}
+
+.parsed-results h4 {
+  margin: 15px 0 10px 0;
+  color: #333;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.ai-accounting-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ai-accounting-form {
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ai-input {
+    width: 90%;
+    min-height: 200px;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    margin-bottom: 16px;
+}
+
+.parsed-results p {
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+.ai-submit-button {
+    width: 90%;
+    padding: 12px;
+    margin-top: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.ai-submit-button:hover {
+    background-color: #45a049;
+}
