@@ -1,0 +1,72 @@
+.home-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 1rem 80px;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+}
+
+.home-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 12px;
+}
+
+.home-header h1 {
+    margin: 0;
+    font-size: 2rem;
+    color: #333;
+}
+
+.logout-button {
+    padding: 0.5rem 1rem;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.logout-button:hover {
+    background-color: #d32f2f;
+}
+
+.home-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.home-content-left {
+    width: 100%;
+}
+
+.home-content-right {
+    width: 100%;
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 1.5rem;
+    color: #646cff;
+}
+
+/* 响应式设计 */
+@media (max-width: 900px) {
+    .home-content {
+        grid-template-columns: 1fr;
+    }
+
+    .home-container {
+        padding: 1rem;
+    }
+}

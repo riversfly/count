@@ -1,0 +1,210 @@
+.bill-form-container {
+    background-color: #fff;
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 900px;
+    width: 90%;
+    border-bottom: 1px solid #eee;
+}
+
+.bill-form-container h3 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: #333;
+    font-size: 1.25rem;
+    text-align: center;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.bill-form-container h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 2px;
+    background-color: #646cff;
+}
+
+.bill-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1rem;
+}
+
+.bill-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    position: relative;
+    margin-bottom: 0.75rem;
+}
+
+.bill-form label {
+    font-weight: 500;
+    color: #333;
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+}
+
+.bill-form input,
+.bill-form select,
+.bill-form textarea {
+    padding: 0.8rem 1rem;
+    border: 1px solid #e0e0e0;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    background-color: #fff;
+    min-height: 2.8rem;
+}
+
+.bill-form input:focus,
+.bill-form select:focus,
+.bill-form textarea:focus {
+    border-color: #646cff;
+    outline: none;
+    background-color: #fff;
+    box-shadow: 0 0 0 3px rgba(100, 108, 255, 0.1);
+}
+
+.bill-submit-button {
+    margin-top: 1.5rem;
+    padding: 0.8rem;
+    background-color: #646cff;
+    color: white;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-icon {
+    margin-left: 8px;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.bill-submit-button:hover {
+    background-color: #535bf2;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(100, 108, 255, 0.3);
+}
+
+.bill-submit-button:disabled {
+    background-color: #a5a6f6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.bill-form-error {
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.25rem;
+    background-color: #ffebee;
+    color: #d32f2f;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    border-left: 3px solid #d32f2f;
+    display: flex;
+    align-items: center;
+}
+
+/* 类型选择器样式 */
+.bill-form .form-group:first-of-type {
+    margin-bottom: 0.5rem;
+}
+
+.bill-form .form-group:first-of-type select {
+    font-weight: 600;
+}
+
+.income-type {
+    border-left: 3px solid #4caf50 !important;
+}
+
+.expense-type {
+    border-left: 3px solid #f44336 !important;
+}
+
+.income-amount {
+    color: #4caf50 !important;
+}
+
+.expense-amount {
+    color: #f44336 !important;
+}
+
+/* 金额输入框样式 */
+.money-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.currency-symbol {
+    position: absolute;
+    left: 12px;
+    font-weight: 600;
+    color: #555;
+    font-size: 1.1rem;
+    pointer-events: none;
+}
+
+.money-input-wrapper input {
+    padding-left: 28px;
+}
+
+.bill-form .money-group input {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+}
+
+/* 响应式设计 */
+@media (min-width: 768px) {
+    .bill-form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.25rem 2rem;
+    }
+
+    .bill-form .form-group:first-of-type {
+        grid-column: 1 / 2;
+    }
+
+    .bill-form .form-group:nth-of-type(2) {
+        grid-column: 2 / 3;
+    }
+
+    .bill-form .form-group:nth-of-type(3) {
+        grid-column: 1 / 2;
+    }
+
+    .bill-form .form-group:nth-of-type(4) {
+        grid-column: 2 / 3;
+    }
+
+    .bill-form .form-group:last-of-type,
+    .bill-submit-button {
+        grid-column: span 2;
+    }
+
+    .bill-form textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    .bill-form {
+        margin: 0.5rem 0.25rem;
+    }
+}
