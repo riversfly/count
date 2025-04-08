@@ -4,6 +4,8 @@ import BottomNav from '../components/BottomNav';
 import { User } from '../types/users';
 import { getUserBills } from '../services/billApi';
 import * as echarts from 'echarts';
+import { getAiAdvice } from '../services/aiAdviceApi';
+import ReactMarkdown from 'react-markdown'
 
 const Analysis: React.FC = () => {
     const chartRef = useRef<HTMLDivElement>(null);
@@ -16,6 +18,8 @@ const Analysis: React.FC = () => {
     const [totalIncome, setTotalIncome] = React.useState<number>(0);
     const [totalExpense, setTotalExpense] = React.useState<number>(0);
     const [charts, setCharts] = React.useState<echarts.ECharts[]>([]);
+    const [aiAdvice, setAiAdvice] = React.useState<string>('');
+    const [loadingAdvice, setLoadingAdvice] = React.useState<boolean>(false);
 
     React.useEffect(() => {
         const storedUser = localStorage.getItem('user');
@@ -42,7 +46,7 @@ const Analysis: React.FC = () => {
 
             const response = await getUserBills(user.id, {
                 startDate,
-                endDate
+                endDate,
             });
 
             if (response.success !== 1) {
@@ -50,6 +54,8 @@ const Analysis: React.FC = () => {
             }
 
             const bills = response.data || [];
+
+
             const incomeBills = bills.filter((bill: any) => bill.type === 'income');
             const expenseBills = bills.filter((bill: any) => bill.type === 'pay');
             
@@ -208,6 +214,52 @@ const Analysis: React.FC = () => {
         };
     }, [totalIncome, totalExpense, loading, selectedYear, selectedMonth]);
 
+    const handleGetAiAdvice = async () => {
+        if (!bills.length) return;
+        
+        setLoadingAdvice(true);
+        setAiAdvice('');
+        
+        // 将图表数据转换为文字描述
+        const incomeBills = bills.filter(bill => bill.type === 'income');
+        const expenseBills = bills.filter(bill => bill.type === 'pay');
+        
+        // 收入类型统计
+        const incomeByType = incomeBills.reduce((acc, bill) => {
+            const type = bill.useFor || '其他';
+            acc[type] = (acc[type] || 0) + Number(bill.money);
+            return acc;
+        }, {});
+        
+        // 支出类型统计
+        const expenseByType = expenseBills.reduce((acc, bill) => {
+            const type = bill.useFor || '其他';
+            acc[type] = (acc[type] || 0) + Number(bill.money);
+            return acc;
+        }, {});
+        
+        // 格式化文字描述
+        const textDescription = `本月收支情况：\n` +
+            `总收入：${totalIncome}元，总支出：${totalExpense}元\n\n` +
+            `收入来源：${Object.entries(incomeByType).map(([type, amount]) => `${type}(${amount}元)`).join('、')}\n` +
+            `支出类别：${Object.entries(expenseByType).map(([type, amount]) => `${type}(${amount}元)`).join('、')}`;
+        
+        // 调用大模型API获取建议
+        try {
+            const response = await getAiAdvice(textDescription);
+            if (response.success === 1) {
+                setAiAdvice(response.data || '');
+            } else {
+                setAiAdvice(response.message || '获取AI建议失败');
+            }
+        } catch (error) {
+            console.error('获取AI建议失败:', error);
+            setAiAdvice('获取AI建议失败，请稍后重试');
+        } finally {
+            setLoadingAdvice(false);
+        }
+    };
+
     const renderContent = () => {
         if (loading) {
             return <div className="loading">加载中...</div>;
@@ -221,7 +273,18 @@ const Analysis: React.FC = () => {
         return (
             <div className="bill-summary">
                 <div ref={chartRef} className="chart-container" style={{ minHeight: '300px' }} />
+                <div className="ai-advice-container">
+                <button 
+                    className="ai-advice-button" 
+                    onClick={handleGetAiAdvice}
+                    disabled={loadingAdvice}
+                >
+                    {loadingAdvice ? '生成建议中...' : '获取AI建议'}
+                </button>
+                {aiAdvice && <div className="ai-advice-content"><ReactMarkdown>{aiAdvice}</ReactMarkdown></div>}
             </div>
+            </div>
+            
         );
     };
 

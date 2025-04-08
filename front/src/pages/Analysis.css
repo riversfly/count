@@ -60,3 +60,32 @@
     padding: 20px;
     color: #666;
 }
+
+.ai-advice-button {
+    background-color: #1890ff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 20px auto;
+    display: block;
+}
+
+.ai-advice-button:hover {
+    background-color: #40a9ff;
+}
+
+.ai-advice-button:disabled {
+    background-color: #8c8c8c;
+    cursor: not-allowed;
+}
+
+.ai-advice-content {
+    background-color: #f0f9ff;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    border: 1px solid #d9d9d9;
+}

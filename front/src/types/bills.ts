@@ -6,7 +6,7 @@ export interface Bill {
     money: number;
     date: string; // ISO格式的日期字符串
     note?: string; // 备注/用途说明
-    use_for?: string; // 用途分类
+    useFor?: string; // 用途分类
 }
 
 // 创建账单请求类型定义

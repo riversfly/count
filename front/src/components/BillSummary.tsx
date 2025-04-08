@@ -35,12 +35,10 @@ const BillSummary: React.FC<BillSummaryProps> = ({ user, refreshTrigger }) => {
             setLoading(true);
             setError('');
             try {
-                console.log(`正在获取${selectedYear}年${selectedMonth}月的账单统计...`);
                 const response = await getMonthSummary(user.id, selectedYear, selectedMonth);
 
                 if (response.success === 1) {
                     setSummary(response.data);
-                    console.log('月度统计数据获取成功:', response.data);
                 } else {
                     setError(response.message || '获取月度统计失败');
                     console.error('获取月度统计失败:', response.message);

@@ -53,7 +53,7 @@ export const getMonthSummary = async (userId: number, year: number, month: numbe
                 userId,  // 用户ID
                 begin: startDate,  // 开始日期 - 确保与后端参数名称匹配
                 end: endDate,      // 结束日期 - 确保与后端参数名称匹配
-                // 不指定type和use_for，获取所有类型的账单
+                // 不指定type和useFor，获取所有类型的账单
             }
         });
 
