@@ -12,4 +12,6 @@ public interface BillsService {
 
     ResultVo<Void> addBills(BillsAddBillsRequest request);
 
+    ResultVo<Void> deleteBill(Long id);
+
 }

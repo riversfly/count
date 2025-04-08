@@ -154,22 +154,16 @@ export const updateBill = async (billId: number, billData: Partial<CreateBillReq
     // }
 };
 
-// 删除账单 - 后端暂未实现此接口
+// 删除账单
 export const deleteBill = async (billId: number) => {
-    console.warn('删除账单接口尚未在后端实现');
-    return {
-        success: 0,
-        message: '删除账单接口尚未在后端实现'
-    };
-    // 当后端实现此接口时，可以使用以下代码
-    // try {
-    //     const response = await api.delete(`/bills/${billId}`);
-    //     return response.data;
-    // } catch (error) {
-    //     console.error('删除账单失败:', error);
-    //     return {
-    //         success: 0,
-    //         message: '删除账单失败'
-    //     };
-    // }
+    try {
+        const response = await api.delete(`/bills/${billId}`);
+        return response.data;
+    } catch (error) {
+        console.error('删除账单失败:', error);
+        return {
+            success: 0,
+            message: '删除账单失败'
+        };
+    }
 };

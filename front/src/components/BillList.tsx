@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Bill, QueryBillsRequest } from '../types/bills';
-import { getUserBills } from '../services/billApi';
+import { getUserBills, deleteBill } from '../services/billApi';
 import { User } from '../types/users';
 import './BillList.css';
-import { log } from 'echarts/types/src/util/log.js';
 
 interface BillListProps {
     user: User;
@@ -17,6 +16,9 @@ const BillList: React.FC<BillListProps> = ({ user, onBillsLoaded, refreshTrigger
     const [error, setError] = useState<string>('');
     const [filterType, setFilterType] = useState<'all' | 'pay' | 'income'>('all');
     const [filterCategory, setFilterCategory] = useState<string>('all');
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState<boolean>(false);
+    const [selectedBillId, setSelectedBillId] = useState<number | null>(null);
+    const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
 
     // 预定义的支出分类
     const expenseCategories = ['餐饮', '交通', '购物', '娱乐', '居家', '医疗', '教育', '其他'];
@@ -125,6 +127,57 @@ const BillList: React.FC<BillListProps> = ({ user, onBillsLoaded, refreshTrigger
                     </button>
                 )}
             </div>
+
+            {/* 删除确认对话框 */}
+            {showDeleteConfirm && selectedBillId && (
+                <div className="delete-confirm-overlay">
+                    <div className="delete-confirm-dialog">
+                        <h4>确认删除</h4>
+                        <p>确定要删除这条账单记录吗？此操作不可撤销。</p>
+                        <div className="delete-confirm-buttons">
+                            <button
+                                className="cancel-button"
+                                onClick={() => {
+                                    setShowDeleteConfirm(false);
+                                    setSelectedBillId(null);
+                                }}
+                                disabled={deleteLoading}
+                            >
+                                取消
+                            </button>
+                            <button
+                                className="confirm-button"
+                                onClick={async () => {
+                                    setDeleteLoading(true);
+                                    try {
+                                        const response = await deleteBill(selectedBillId);
+                                        if (response.success === 1) {
+                                            // 重新获取账单列表
+                                            const updatedBills = bills.filter(bill => bill.id !== selectedBillId);
+                                            setBills(updatedBills);
+                                            if (onBillsLoaded) {
+                                                onBillsLoaded(updatedBills);
+                                            }
+                                        } else {
+                                            setError(response.message || '删除账单失败');
+                                        }
+                                    } catch (err) {
+                                        setError('删除账单时发生错误');
+                                        console.error(err);
+                                    } finally {
+                                        setDeleteLoading(false);
+                                        setShowDeleteConfirm(false);
+                                        setSelectedBillId(null);
+                                    }
+                                }}
+                                disabled={deleteLoading}
+                            >
+                                {deleteLoading ? '删除中...' : '确认删除'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 
@@ -190,9 +243,69 @@ const BillList: React.FC<BillListProps> = ({ user, onBillsLoaded, refreshTrigger
                             <div className="bill-note">{bill.note || '-'}</div>
                         </div>
                         <div className="bill-amount">{formatMoney(bill.money, bill.type)}</div>
+                        <button
+                            className="bill-delete-button"
+                            onClick={() => {
+                                setSelectedBillId(bill.id);
+                                setShowDeleteConfirm(true);
+                            }}
+                        >
+                            删除
+                        </button>
                     </div>
                 ))}
             </div>
+
+            {/* 删除确认对话框 */}
+            {showDeleteConfirm && selectedBillId && (
+                <div className="delete-confirm-overlay">
+                    <div className="delete-confirm-dialog">
+                        <h4>确认删除</h4>
+                        <p>确定要删除这条账单记录吗？此操作不可撤销。</p>
+                        <div className="delete-confirm-buttons">
+                            <button
+                                className="cancel-button"
+                                onClick={() => {
+                                    setShowDeleteConfirm(false);
+                                    setSelectedBillId(null);
+                                }}
+                                disabled={deleteLoading}
+                            >
+                                取消
+                            </button>
+                            <button
+                                className="confirm-button"
+                                onClick={async () => {
+                                    setDeleteLoading(true);
+                                    try {
+                                        const response = await deleteBill(selectedBillId);
+                                        if (response.success === 1) {
+                                            // 重新获取账单列表
+                                            const updatedBills = bills.filter(bill => bill.id !== selectedBillId);
+                                            setBills(updatedBills);
+                                            if (onBillsLoaded) {
+                                                onBillsLoaded(updatedBills);
+                                            }
+                                        } else {
+                                            setError(response.message || '删除账单失败');
+                                        }
+                                    } catch (err) {
+                                        setError('删除账单时发生错误');
+                                        console.error(err);
+                                    } finally {
+                                        setDeleteLoading(false);
+                                        setShowDeleteConfirm(false);
+                                        setSelectedBillId(null);
+                                    }
+                                }}
+                                disabled={deleteLoading}
+                            >
+                                {deleteLoading ? '删除中...' : '确认删除'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

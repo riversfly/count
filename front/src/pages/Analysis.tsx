@@ -58,7 +58,7 @@ const Analysis: React.FC = () => {
 
             const incomeBills = bills.filter((bill: any) => bill.type === 'income');
             const expenseBills = bills.filter((bill: any) => bill.type === 'pay');
-            
+
             const income = incomeBills.reduce((sum: number, bill: any) => sum + Number(bill.money), 0);
             const expense = expenseBills.reduce((sum: number, bill: any) => sum + Number(bill.money), 0);
 
@@ -85,7 +85,7 @@ const Analysis: React.FC = () => {
             setBills(bills);
             setTotalIncome(income);
             setTotalExpense(expense);
-            
+
             // 更新图表数据
             const incomeData = Object.entries(incomeByType).map(([name, value]) => ({ name, value }));
             const expenseData = Object.entries(expenseByType).map(([name, value]) => ({ name, value }));
@@ -103,16 +103,16 @@ const Analysis: React.FC = () => {
 
     useEffect(() => {
         if (!chartRef.current || loading || (totalIncome === 0 && totalExpense === 0)) return;
-        
+
         // 清除现有图表
         charts.forEach(chart => chart.dispose());
-        
+
         // 创建容器
         const container = chartRef.current;
         container.style.display = 'flex';
         container.style.justifyContent = 'space-between';
         container.innerHTML = '';
-        
+
         // 创建三个图表容器
         const chartContainers = Array.from({ length: 3 }, () => {
             const div = document.createElement('div');
@@ -216,34 +216,34 @@ const Analysis: React.FC = () => {
 
     const handleGetAiAdvice = async () => {
         if (!bills.length) return;
-        
+
         setLoadingAdvice(true);
         setAiAdvice('');
-        
+
         // 将图表数据转换为文字描述
         const incomeBills = bills.filter(bill => bill.type === 'income');
         const expenseBills = bills.filter(bill => bill.type === 'pay');
-        
+
         // 收入类型统计
         const incomeByType = incomeBills.reduce((acc, bill) => {
             const type = bill.useFor || '其他';
             acc[type] = (acc[type] || 0) + Number(bill.money);
             return acc;
         }, {});
-        
+
         // 支出类型统计
         const expenseByType = expenseBills.reduce((acc, bill) => {
             const type = bill.useFor || '其他';
             acc[type] = (acc[type] || 0) + Number(bill.money);
             return acc;
         }, {});
-        
+
         // 格式化文字描述
         const textDescription = `本月收支情况：\n` +
             `总收入：${totalIncome}元，总支出：${totalExpense}元\n\n` +
             `收入来源：${Object.entries(incomeByType).map(([type, amount]) => `${type}(${amount}元)`).join('、')}\n` +
             `支出类别：${Object.entries(expenseByType).map(([type, amount]) => `${type}(${amount}元)`).join('、')}`;
-        
+
         // 调用大模型API获取建议
         try {
             const response = await getAiAdvice(textDescription);
@@ -274,17 +274,17 @@ const Analysis: React.FC = () => {
             <div className="bill-summary">
                 <div ref={chartRef} className="chart-container" style={{ minHeight: '300px' }} />
                 <div className="ai-advice-container">
-                <button 
-                    className="ai-advice-button" 
-                    onClick={handleGetAiAdvice}
-                    disabled={loadingAdvice}
-                >
-                    {loadingAdvice ? '生成建议中...' : '获取AI建议'}
-                </button>
-                {aiAdvice && <div className="ai-advice-content"><ReactMarkdown>{aiAdvice}</ReactMarkdown></div>}
+                    <button
+                        className="ai-advice-button"
+                        onClick={handleGetAiAdvice}
+                        disabled={loadingAdvice}
+                    >
+                        {loadingAdvice ? '生成建议中...' : '获取AI建议'}
+                    </button>
+                    {aiAdvice && <div className="ai-advice-content"><ReactMarkdown>{aiAdvice}</ReactMarkdown></div>}
+                </div>
             </div>
-            </div>
-            
+
         );
     };
 
@@ -299,7 +299,7 @@ const Analysis: React.FC = () => {
             </div>
             <div className="analysis-content">
                 <div className="date-selector">
-                    <select 
+                    <select
                         value={selectedYear}
                         onChange={(e) => setSelectedYear(Number(e.target.value))}
                     >
@@ -307,7 +307,7 @@ const Analysis: React.FC = () => {
                             <option key={year} value={year}>{year}年</option>
                         ))}
                     </select>
-                    <select 
+                    <select
                         value={selectedMonth}
                         onChange={(e) => setSelectedMonth(Number(e.target.value))}
                     >

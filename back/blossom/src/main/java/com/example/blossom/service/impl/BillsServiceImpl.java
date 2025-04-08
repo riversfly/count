@@ -76,4 +76,19 @@ public class BillsServiceImpl extends ServiceImpl<BillsMapper, Bills> implements
         return ResultVo.success("添加成功");
     }
 
+    @Override
+    public ResultVo<Void> deleteBill(Long id) {
+        if (id == null) {
+            return ResultVo.failure("账单ID不能为空");
+        }
+
+        Bills bill = getById(id);
+        if (bill == null) {
+            return ResultVo.failure("账单不存在");
+        }
+
+        removeById(id);
+        return ResultVo.success("删除成功");
+    }
+
 }
