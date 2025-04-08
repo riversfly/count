@@ -17,7 +17,7 @@ export const getUserBills = async (userId: number, query?: QueryBillsRequest) =>
             params: {
                 userId,
                 type: query?.type,
-                useFor: query?.useFor,
+                useFor: query?.use_for,
                 begin: query?.startDate,
                 end: query?.endDate
             }
@@ -53,7 +53,7 @@ export const getMonthSummary = async (userId: number, year: number, month: numbe
                 userId,  // 用户ID
                 begin: startDate,  // 开始日期 - 确保与后端参数名称匹配
                 end: endDate,      // 结束日期 - 确保与后端参数名称匹配
-                // 不指定type和useFor，获取所有类型的账单
+                // 不指定type和use_for，获取所有类型的账单
             }
         });
 
@@ -120,7 +120,7 @@ export const createBill = async (userId: number, billData: CreateBillRequest) =>
             money: billData.money,
             date: billData.date,
             note: billData.note,
-            useFor: billData.useFor
+            useFor: billData.use_for
         };
 
         const response = await api.post(`/bills`, requestData);

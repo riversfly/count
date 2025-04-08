@@ -56,7 +56,7 @@ const BillList: React.FC<BillListProps> = ({ user, onBillsLoaded, refreshTrigger
                 }
 
                 if (filterCategory !== 'all') {
-                    queryParams.useFor = filterCategory;
+                    queryParams.use_for = filterCategory;
                 }
 
                 const response = await getUserBills(user.id, queryParams);
@@ -184,7 +184,7 @@ const BillList: React.FC<BillListProps> = ({ user, onBillsLoaded, refreshTrigger
                     <div key={bill.id} className={`bill-item ${bill.type === 'income' ? 'income' : 'expense'}`}>
                         <div className="bill-date">{formatDate(bill.date)}</div>
                         <div className="bill-info">
-                            <div className="bill-category">{bill.useFor || (bill.type === 'income' ? '收入' : '支出')}</div>
+                            <div className="bill-category">{bill.use_for || (bill.type === 'income' ? '收入' : '支出')}</div>
                             <div className="bill-note">{bill.note || '-'}</div>
                         </div>
                         <div className="bill-amount">{formatMoney(bill.money, bill.type)}</div>
