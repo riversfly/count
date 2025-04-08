@@ -28,7 +28,7 @@ const BillList: React.FC<BillListProps> = ({ user, onBillsLoaded, refreshTrigger
     // 格式化日期显示
     const formatDate = (dateString: string) => {
         const date = new Date(dateString);
-        return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
+        return `${date.getFullYear()}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getDate().toString().padStart(2, '0')}`
     };
 
     // 格式化金额显示

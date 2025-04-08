@@ -5,7 +5,7 @@ export interface AiAccountingResponse {
     date: string;
     money: number;
     note: string;
-    type: string;
+    type: 'pay' | 'income';
     useFor: string;
     userId: number;
   }[];
@@ -36,7 +36,7 @@ export const saveAccountingData = async (
       note: note || '',
       useFor: useFor || '',
     };
-    
+
     // 调用后端API保存数据
     const response = await fetch('http://localhost:8080/bills', {
       method: 'POST',
@@ -46,12 +46,12 @@ export const saveAccountingData = async (
       },
       body: JSON.stringify(billData)
     });
-    
+
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(errorData.message || '保存账单失败');
     }
-    
+
     return {
       success: true,
       message: '账单保存成功'
@@ -70,7 +70,7 @@ export const parseAccountingData = async (
   onStream?: (chunk: string) => void
 ): Promise<AiAccountingResponse> => {
   try {
-    const userJSON= localStorage.getItem('user');
+    const userJSON = localStorage.getItem('user');
     let userParsed = undefined;
     if (userJSON) {
       userParsed = JSON.parse(userJSON);
@@ -86,7 +86,7 @@ export const parseAccountingData = async (
         model: 'deepseek-r1',
         messages: [{
           role: 'user',
-          content: `请将以下账单信息解析为包含date、money、note、type、useFor和${userParsed.id}字段的纯净JSON:\n${textDescription}\n \n返回格式示例:{"date":"2023-01-01","money":100.0,"note":"备注","type":"类型","useFor":"用途","userId":1},类型只包含收入或者支出，支出用途只包括以下选项: '餐饮', '交通', '购物', '娱乐', '居家', '医疗', '教育', '其他'，收入用途只包括以下选项: '工资', '奖金', '投资', '兼职', '礼金', '其他'\n注意有可能有多条账单信息，返回的JSON数组中每个元素都是一条账单信息。`
+          content: `请将以下账单信息解析为包含date、money、note、type、useFor和${userParsed.id}字段的纯净JSON:\n${textDescription}\n \n返回格式示例:{"date":"2023-01-01","money":100.0,"note":"备注","type":"pay","useFor":"用途","userId":1},type字段只能为'pay'或'income'，支出(pay)用途只包括以下选项: '餐饮', '交通', '购物', '娱乐', '居家', '医疗', '教育', '其他'，收入(income)用途只包括以下选项: '工资', '奖金', '投资', '兼职', '礼金', '其他'\n注意有可能有多条账单信息，返回的JSON数组中每个元素都是一条账单信息。`
         }],
         stream: true,
         stream_options: {
@@ -108,15 +108,15 @@ export const parseAccountingData = async (
     while (true) {
       const { done, value } = await reader.read();
       if (done) break;
-      
+
       const chunk = new TextDecoder().decode(value);
       const lines = chunk.split('\n').filter(line => line.trim() !== '');
-      
+
       for (const line of lines) {
         if (line.startsWith('data: ')) {
           const data = line.substring(6);
           if (data === '[DONE]') continue;
-          
+
           try {
             const parsed = JSON.parse(data);
             if (parsed.choices?.[0]?.delta?.content) {

@@ -85,7 +85,6 @@ const BillForm: React.FC<BillFormProps> = ({ user, onBillAdded }) => {
 
     return (
         <div className="bill-form-container">
-            <h3>添加新账单</h3>
             {error && <div className="bill-form-error"><span>⚠️</span> {error}</div>}
             {showSuccess && <div className="bill-form-success"><span>✅</span> 账单添加成功！</div>}
             <form onSubmit={handleSubmit} className="bill-form">
