@@ -19,6 +19,7 @@ const BillForm: React.FC<BillFormProps> = ({ user, onBillAdded }) => {
     });
     const [error, setError] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
+    const [showSuccess, setShowSuccess] = useState<boolean>(false);
 
     // 预定义的支出分类
     const expenseCategories = ['餐饮', '交通', '购物', '娱乐', '居家', '医疗', '教育', '其他'];
@@ -65,6 +66,10 @@ const BillForm: React.FC<BillFormProps> = ({ user, onBillAdded }) => {
                     note: '',
                     use_for: ''
                 });
+                // 显示成功提示
+                setShowSuccess(true);
+                // 3秒后自动关闭
+                setTimeout(() => setShowSuccess(false), 3000);
                 // 通知父组件刷新账单列表
                 onBillAdded();
             } else {
@@ -82,6 +87,7 @@ const BillForm: React.FC<BillFormProps> = ({ user, onBillAdded }) => {
         <div className="bill-form-container">
             <h3>添加新账单</h3>
             {error && <div className="bill-form-error"><span>⚠️</span> {error}</div>}
+            {showSuccess && <div className="bill-form-success"><span>✅</span> 账单添加成功！</div>}
             <form onSubmit={handleSubmit} className="bill-form">
                 <div className="form-group">
                     <label htmlFor="type">账单类型</label>
