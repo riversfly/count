@@ -1,9 +1,17 @@
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
--- ----------------------------
--- Records of bills (Test Data)
--- ----------------------------
+INSERT INTO `users` VALUES (13, '123', '123123');
+INSERT INTO `users` VALUES (14, '123123', '123123');
+INSERT INTO `users` VALUES (15, '123123123', '123123');
+INSERT INTO `users` VALUES (16, '111111', '111111');
+INSERT INTO `users` VALUES (17, '1111111', '1111111');
+INSERT INTO `users` VALUES (18, 'huangwenqin', '123456');
+INSERT INTO `users` VALUES (19, '111', '111');
+INSERT INTO `users` VALUES (20, '202225220111', '123456');
+INSERT INTO `users` VALUES (21, '2022252201111', '123456');
+INSERT INTO `users` VALUES (22, '2022252201112', '123456');
+
 INSERT INTO `bills` VALUES (1, 20, 'income', 6000.00, '2025-03-01', '月薪入账', '工资');
 INSERT INTO `bills` VALUES (2, 21, 'pay', 45.00, '2025-03-01', '午餐', '餐饮');
 INSERT INTO `bills` VALUES (3, 22, 'pay', 35.00, '2025-03-01', '地铁', '交通');
