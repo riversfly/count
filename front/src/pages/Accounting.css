@@ -1,9 +1,15 @@
+/* 引入共享布局样式 */
+@import '../components/SharedLayout.css';
+
 .accounting-container {
     width: 100%;
     min-height: 100vh;
+    max-height: 100vh;
     display: flex;
     flex-direction: column;
     background-color: #fff;
+    overflow-y: auto;
+    padding-bottom: 60px; /* 为底部导航栏预留空间 */
 }
 
 .accounting-header {
@@ -24,6 +30,9 @@
 .accounting-content {
     background-color: #ffffff;
     flex: 1;
+    overflow-y: auto;
+    height: calc(100vh - 130px); /* 减去头部和底部导航的高度 */
+    padding: 1rem;
 }
 
 .loading {

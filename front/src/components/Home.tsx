@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User } from '../types/users';
-import BillSummary from './BillSummary';
-import BillList from './BillList';
+import MonthlyFinance from './MonthlyFinance';
 import BottomNav from './BottomNav';
 import './Home.css';
 
@@ -44,12 +43,9 @@ const Home: React.FC = () => {
                 <button className="logout-button" onClick={handleLogout}>退出登录</button>
             </div>
 
-            {/* 财务概览 */}
-            <BillSummary user={user} />
-
             <div className="home-content">
-                {/* 交易明细列表 */}
-                <BillList user={user} />
+                {/* 整合的月度财务概览和交易明细 */}
+                <MonthlyFinance user={user} />
             </div>
 
             {/* 底部导航栏 */}

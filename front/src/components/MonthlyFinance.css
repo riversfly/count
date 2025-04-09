@@ -1,0 +1,48 @@
+/* 引入共享布局样式 */
+@import './SharedLayout.css';
+
+.monthly-finance-container {
+    background-color: #fff;
+    min-height: 100vh;
+    max-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    padding-bottom: 60px;
+    /* 为底部导航栏预留空间 */
+}
+
+/* 确保BillSummary和BillList容器之间有适当的间距 */
+.monthly-finance-container .bill-summary-container {
+    margin-bottom: 0;
+    border-bottom: 1px solid #eee;
+    padding: 1rem;
+}
+
+.monthly-finance-container .bill-list-container {
+    flex: 1;
+    border-top: none;
+    overflow-y: auto;
+    height: calc(100vh - 200px);
+    /* 减去头部和底部导航的高度 */
+}
+
+/* 确保日期选择器在小屏幕上也能正常显示 */
+@media (max-width: 768px) {
+    .summary-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .date-selector {
+        margin-top: 0.5rem;
+    }
+
+    .summary-cards {
+        flex-direction: column;
+    }
+
+    .summary-card {
+        margin-bottom: 0.5rem;
+    }
+}
