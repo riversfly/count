@@ -36,7 +36,7 @@ const AIAccounting: React.FC = () => {
                 <form className="ai-accounting-form">
                     <textarea
                         className="ai-input"
-                        placeholder="请输入您的消费事项..."
+                        placeholder="请输入时间和对应的消费事项，AI将为您自动生成账单"
                         value={inputText}
                         onChange={(e) => setInputText(e.target.value)}
                     />
